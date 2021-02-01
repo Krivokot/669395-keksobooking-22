@@ -23,7 +23,7 @@ const GET_RANDOM = function (start, end) {
 
 };
 
-console.log(GET_RANDOM(10, 0));
+GET_RANDOM(10, 0);
 
 //или функция из MDN
 
@@ -33,7 +33,7 @@ const GET_RANDOM_MDN = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-console.log(GET_RANDOM_MDN(0, 10));
+GET_RANDOM_MDN(0, 10);
 
 //с плавающей запятой
 
@@ -48,8 +48,8 @@ const GET_RANDOM_GEO = function (start, end, dot) {
 
   let rand = Math.random() * (end - start) + start;
 
-   return Number(rand.toFixed(dot));
+  return Number(rand.toFixed(dot));
 
 };
 
-console.log(GET_RANDOM_GEO(0.2, 1, 1));
+GET_RANDOM_GEO(0.2, 1, 1);
