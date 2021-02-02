@@ -21,3 +21,5 @@ const getRandomInt = function (start, end) {
   return getRandomFloat(start, end);
 
 };
+
+getRandomInt(1, 10);
