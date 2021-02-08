@@ -122,4 +122,4 @@ const adv = () => {
 
 const advs = () => new Array(ADVS_COUNT).fill(null).map(() => adv());
 
-console.log(advs());
+advs();
