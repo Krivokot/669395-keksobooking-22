@@ -81,11 +81,15 @@ const getRandomArrayElement = function (elements) {
 };
 
 const getRandomArrayElements = function (elements) {
-  
-  return new Array(getRandomInt(1, elements.length-1)).fill(null).map(() => 
-    getRandomArrayElement(elements)
-    );
-};
+  let array = [];
+
+  for (let i = 0; i < getRandomInt(1, elements.length-1); i++) {
+
+      array = elements.slice(getRandomInt(0, elements.length-1))
+    }
+
+    return array;
+  }
 
 const adv = () => {
   return {
@@ -114,5 +118,3 @@ const adv = () => {
 
 
 const advs = new Array(ADVS_COUNT).fill(null).map(() => adv());
-
-console.log(advs);
