@@ -81,11 +81,14 @@ const getRandomArrayElement = function (elements) {
 };
 
 const getRandomArrayElements = function (elements) {
+  const ARRAY_COPY = elements.slice();
+  const ELEMENTS_COUNT = getRandomInt(1, ARRAY_COPY.length);
+
   let array = [];
 
-  for (let i = 0; i < getRandomInt(1, elements.length-1); i++) {
+  for (let i = 0; i < ELEMENTS_COUNT; i++) {
 
-    array = elements.slice(getRandomInt(0, elements.length-1))
+    array.push(ARRAY_COPY.splice(getRandomArrayElement(elements), 1));
   }
 
   return array;
@@ -119,4 +122,4 @@ const adv = () => {
 
 const advs = () => new Array(ADVS_COUNT).fill(null).map(() => adv());
 
-advs();
+console.log(advs());
