@@ -22,6 +22,12 @@ const getRandomInt = function (start, end) {
 
 };
 
+const TITLES = [
+  'Крутая хата в центре',
+  'Зачетная конура для милых котиков',
+  'Царские хоромы за гроши',
+  'Жилье для студентов и не только',
+];
 
 const TYPES = [
   'palace',
@@ -51,6 +57,12 @@ const FEAUTERS = [
   'conditioner'
 ];
 
+const DESCRIPTIONS = [
+  'Отличный ремонт, прекрасный вид, тихие соседи, что нужно еще?',
+  'Чисто, уютно, хорошо, до моря 230 км. Это Япония, детка',
+  'Помещение без мебели, без ремонта, есть крысы, рядом живут наркоманы',
+];
+
 const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
@@ -59,32 +71,42 @@ const PHOTOS = [
 
 const ADVS_COUNT = 10;
 
+const x = getRandomFloat(35.65000, 35.70000, 5);
+const y = getRandomFloat(139.70000, 139.80000, 5);
+
 
 const getRandomArrayElement = function (elements) {
 
   return elements[getRandomInt(0, elements.length-1)];
 };
 
+const getRandomArrayElements = function (elements) {
+  
+  return new Array(getRandomInt(1, elements.length-1)).fill(null).map(() => 
+    getRandomArrayElement(elements)
+    );
+};
+
 const adv = () => {
   return {
       author: {
-        avatar: 'img/avatars/user' + '0' + getRandomInt(1,8) + '.png',
+        avatar: `img/avatars/user0${getRandomInt(1,8)}.png`,
       },
       location: {
-        x: getRandomFloat(35.65000, 35.70000, 5),
-        y: getRandomFloat(139.70000, 139.80000, 5),
+        x: x,
+        y: y,
     },
       offer: {
-        title: '',
-        address: '',
+        title: getRandomArrayElement(TITLES),
+        address: `${x}, ${y}`,
         price: getRandomInt(1000, 20000),
         type: getRandomArrayElement(TYPES),
         rooms: getRandomInt(1,5),
         guests: getRandomInt(1,5),
         checkin: getRandomArrayElement(CHECKIN_TIMES),
         checkout: getRandomArrayElement(CHECKOUT_TIMES),
-        features: getRandomArrayElement(FEAUTERS),
-        description: '',
+        features: getRandomArrayElements(FEAUTERS),
+        description: getRandomArrayElement(DESCRIPTIONS),
         photos: getRandomArrayElement(PHOTOS),
       },
   }
