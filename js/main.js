@@ -33,19 +33,19 @@ const TYPES = [
   'palace',
   'flat',
   'house',
-  'bungalow'
+  'bungalow',
 ];
 
 const CHECKIN_TIMES = [
   '12:00',
   '13:00',
-  '14:00'
+  '14:00',
 ];
 
 const CHECKOUT_TIMES = [
   '12:00',
   '13:00',
-  '14:00'
+  '14:00',
 ];
 
 const FEAUTERS = [
@@ -54,7 +54,7 @@ const FEAUTERS = [
   'parking',
   'washer',
   'elevator',
-  'conditioner'
+  'conditioner',
 ];
 
 const DESCRIPTIONS = [
@@ -66,7 +66,7 @@ const DESCRIPTIONS = [
 const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-  'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
 const ADVS_COUNT = 10;
@@ -85,36 +85,38 @@ const getRandomArrayElements = function (elements) {
 
   for (let i = 0; i < getRandomInt(1, elements.length-1); i++) {
 
-      array = elements.slice(getRandomInt(0, elements.length-1))
-    }
-
-    return array;
+    array = elements.slice(getRandomInt(0, elements.length-1))
   }
+
+  return array;
+}
 
 const adv = () => {
   return {
-      author: {
-        avatar: `img/avatars/user0${getRandomInt(1,8)}.png`,
-      },
-      location: {
-        x: x,
-        y: y,
+    author: {
+      avatar: `img/avatars/user0${getRandomInt(1,8)}.png`,
     },
-      offer: {
-        title: getRandomArrayElement(TITLES),
-        address: `${x}, ${y}`,
-        price: getRandomInt(1000, 20000),
-        type: getRandomArrayElement(TYPES),
-        rooms: getRandomInt(1,5),
-        guests: getRandomInt(1,5),
-        checkin: getRandomArrayElement(CHECKIN_TIMES),
-        checkout: getRandomArrayElement(CHECKOUT_TIMES),
-        features: getRandomArrayElements(FEAUTERS),
-        description: getRandomArrayElement(DESCRIPTIONS),
-        photos: getRandomArrayElement(PHOTOS),
-      },
+    location: {
+      x: x,
+      y: y,
+    },
+    offer: {
+      title: getRandomArrayElement(TITLES),
+      address: `${x}, ${y}`,
+      price: getRandomInt(1000, 20000),
+      type: getRandomArrayElement(TYPES),
+      rooms: getRandomInt(1,5),
+      guests: getRandomInt(1,5),
+      checkin: getRandomArrayElement(CHECKIN_TIMES),
+      checkout: getRandomArrayElement(CHECKOUT_TIMES),
+      features: getRandomArrayElements(FEAUTERS),
+      description: getRandomArrayElement(DESCRIPTIONS),
+      photos: getRandomArrayElement(PHOTOS),
+    },
   }
 };
 
 
-const advs = new Array(ADVS_COUNT).fill(null).map(() => adv());
+const advs = () => new Array(ADVS_COUNT).fill(null).map(() => adv());
+
+advs();
