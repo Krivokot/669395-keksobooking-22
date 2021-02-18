@@ -47,7 +47,7 @@ const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-const ADVS_COUNT = 10;
+const ADVS_COUNT = 1;
 
 const x = getRandomFloat(35.65000, 35.70000, 5);
 const y = getRandomFloat(139.70000, 139.80000, 5);
@@ -60,7 +60,7 @@ const getRandomArrayElement = function (elements) {
 
 const getRandomArrayElements = function (elements) {
   const ARRAY_COPY = elements.slice();
-  const ELEMENTS_COUNT = getRandomInt(1, ARRAY_COPY.length);
+  const ELEMENTS_COUNT = getRandomInt(0, ARRAY_COPY.length);
 
   let array = [];
 
@@ -100,4 +100,4 @@ const adv = () => {
 
 const advs = () => new Array(ADVS_COUNT).fill(null).map(() => adv());
 
-export {advs};
+export {advs, adv};
