@@ -1,4 +1,4 @@
-import {advs} from './data.js';
+import {generateAdvertsments} from './data.js';
 
 const cardTemplate = document.querySelector('#card')
   .content
@@ -6,55 +6,50 @@ const cardTemplate = document.querySelector('#card')
 
 const map = document.querySelector('.map__canvas');
 
-const createAdvs = advs();
+const advertsCollection = generateAdvertsments();
 
 const mapFragment = document.createDocumentFragment();
+
+const TypesTranslation = {
+  FLAT: 'Квартира',
+  BUNGALOW: 'Бунгало',
+  HOUSE: 'Дом',
+  PALACE: 'Дворец',
+};
 
 const translateType = function (type) {
   switch (type) {
     case 'flat':
-      return 'Квартира';
+      return TypesTranslation.FLAT;
     case  'bungalow':
-      return 'Бунгало';
+      return TypesTranslation.BUNGALOW;
     case 'house':
-      return 'Дом';
+      return TypesTranslation.HOUSE;
     case 'palace':
-      return 'Дворец';
+      return TypesTranslation.PALACE;
     default:
       return 'Не определено';
   }
 };
 
-createAdvs.forEach(({offer, author}) => {
+advertsCollection.forEach(({offer, author}) => {
   const cardElement = cardTemplate.cloneNode(true);
 
   const changePopupElementText = function (elementClass, data) {
     cardElement.querySelector(elementClass).textContent = data;
 
-    return;
   };
 
-  const getFeatures = function (items) {
+  const updateFeaturesState = function (items) {
 
-    const features = cardElement.querySelector('.popup__features');
-    const featuresTemplate = features.cloneNode(true);
-    features.innerHTML = '';
+    const featuresElement = cardElement.querySelector('.popup__features');
+    const featuresTemplate = featuresElement.cloneNode(true);
+    featuresElement.innerHTML = '';
 
-    for (let i = 0; i < items.length; i++) {
-      if (items[i] == 'wifi') {
-        features.appendChild(featuresTemplate.querySelector('.popup__feature--wifi'));
-      } else if (items[i] == 'dishwasher') {
-        features.appendChild(featuresTemplate.querySelector('.popup__feature--dishwasher'));
-      } else if (items[i] == 'parking') {
-        features.appendChild(featuresTemplate.querySelector('.popup__feature--parking'));
-      } else if (items[i] == 'washer') {
-        features.appendChild(featuresTemplate.querySelector('.popup__feature--washer'));
-      } else if (items[i] == 'elevator') {
-        features.appendChild(featuresTemplate.querySelector('.popup__feature--elevator'));
-      } else {
-        features.appendChild(featuresTemplate.querySelector('.popup__feature--conditioner'));
-      }
-    }
+    items.forEach(item => {
+      featuresElement.appendChild(featuresTemplate.querySelector(`.popup__feature--${item}`));
+    });
+
   };
 
   changePopupElementText('.popup__title', offer.title);
@@ -63,7 +58,7 @@ createAdvs.forEach(({offer, author}) => {
   changePopupElementText('.popup__type', translateType(offer.type));
   changePopupElementText('.popup__text--capacity', `${offer.rooms} комнаты для ${offer.guests} гостей`);
   changePopupElementText('.popup__text--time', `Заезд после ${offer.checkin} выезд до ${offer.checkout}`);
-  getFeatures(offer.features);
+  updateFeaturesState(offer.features);
   changePopupElementText('.popup__description', offer.description);
   cardElement.querySelector('.popup__photo').src = offer.photos;
   cardElement.querySelector('.popup__avatar').src = author.avatar;
