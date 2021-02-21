@@ -1,4 +1,4 @@
-const getRandomFloat = function (start, end, dot = 0) {
+const getRandomFloat = function (start, end, dot = 5) {
 
   if (start > end) {
     let swap = start;
@@ -16,7 +16,7 @@ const getRandomFloat = function (start, end, dot = 0) {
 
 const getRandomInt = function (start, end) {
 
-  return getRandomFloat(start, end);
+  return getRandomFloat(start, end, 0);
 
 };
 

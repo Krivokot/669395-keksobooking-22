@@ -47,10 +47,20 @@ const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-const ADVS_COUNT = 10;
+const ADVS_COUNT = 1
+const LONGITUDE_MIN = 139.70000;
+const LONGITUDE_MAX = 139.80000;
+const LATITUDE_MIN = 35.65000;
+const LATITUDE_MAX = 35.70000;
+const GUESTS_MIN = 1;
+const GUESTS_MAX = 5;
+const ROOMS_MIN = 1;
+const ROOMS_MAX = 5;
+const PRICE_MIN = 1000;
+const PRICE_MAX = 20000;
 
-const x = getRandomFloat(35.65000, 35.70000, 5);
-const y = getRandomFloat(139.70000, 139.80000, 5);
+const x = getRandomFloat(LATITUDE_MIN, LATITUDE_MAX);
+const y = getRandomFloat(LONGITUDE_MIN, LONGITUDE_MAX);
 
 
 const getRandomArrayElement = function (elements) {
@@ -60,19 +70,18 @@ const getRandomArrayElement = function (elements) {
 
 const getRandomArrayElements = function (elements) {
   const ARRAY_COPY = elements.slice();
-  const ELEMENTS_COUNT = getRandomInt(1, ARRAY_COPY.length);
+  const ELEMENTS_COUNT = getRandomInt(0, ARRAY_COPY.length);
 
   let array = [];
 
   for (let i = 0; i < ELEMENTS_COUNT; i++) {
-
     array.push(ARRAY_COPY.splice(getRandomArrayElement(elements), 1));
   }
 
   return array;
 }
 
-const adv = () => {
+const generateAdvertsmentsItem = () => {
   return {
     author: {
       avatar: `img/avatars/user0${getRandomInt(1,8)}.png`,
@@ -84,10 +93,10 @@ const adv = () => {
     offer: {
       title: getRandomArrayElement(TITLES),
       address: `${x}, ${y}`,
-      price: getRandomInt(1000, 20000),
+      price: getRandomInt(PRICE_MIN, PRICE_MAX),
       type: getRandomArrayElement(TYPES),
-      rooms: getRandomInt(1,5),
-      guests: getRandomInt(1,5),
+      rooms: getRandomInt(ROOMS_MIN, ROOMS_MAX),
+      guests: getRandomInt(GUESTS_MIN, GUESTS_MAX),
       checkin: getRandomArrayElement(CHECKIN_TIMES),
       checkout: getRandomArrayElement(CHECKOUT_TIMES),
       features: getRandomArrayElements(FEAUTERS),
@@ -98,6 +107,6 @@ const adv = () => {
 };
 
 
-const advs = () => new Array(ADVS_COUNT).fill(null).map(() => adv());
+const generateAdvertsments = () => new Array(ADVS_COUNT).fill(null).map(() => generateAdvertsmentsItem());
 
-export {advs};
+export {generateAdvertsments};
