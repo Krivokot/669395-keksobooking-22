@@ -1,4 +1,4 @@
-const cardTemplate = document.querySelector('#card')
+const cardTemplateElement = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
@@ -27,7 +27,7 @@ const translateType = function (type) {
 };
 
 const generateCard = (offer, author) => {
-  const cardElement = cardTemplate.cloneNode(true);
+  const cardElement = cardTemplateElement.cloneNode(true);
 
   const changePopupElementText = function (elementClass, data) {
     cardElement.querySelector(elementClass).textContent = data;
@@ -37,11 +37,11 @@ const generateCard = (offer, author) => {
   const updateFeaturesState = function (items) {
 
     const featuresElement = cardElement.querySelector('.popup__features');
-    const featuresTemplate = featuresElement.cloneNode(true);
-    featuresElement.innerHTML = '';
+    const featuresTemplateElement = featuresElement.cloneNode(true);
+    featuresElement.innerText = '';
 
     items.forEach(item => {
-      featuresElement.appendChild(featuresTemplate.querySelector(`.popup__feature--${item}`));
+      featuresElement.appendChild(featuresTemplateElement.querySelector(`.popup__feature--${item}`));
     });
 
   };
