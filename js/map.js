@@ -80,10 +80,10 @@ points.forEach((point) => {
     lat: point.location.lng,
     lng: point.location.lat,
     
-    },
-    {
+  },
+  {
     icon: pinIcon,
-    },
+  },
   );
 
   marker
