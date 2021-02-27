@@ -1,4 +1,4 @@
-/* global _:readonly */
+/* global L:readonly */
 
 import {advertsForm, mapFilter, addressInput} from './form.js';
 import {generateAdvertsments} from './data.js';
