@@ -6,7 +6,7 @@ import {generateCard} from './card.js';
 
 const CITY_LAT = 35.6894; 
 const CITY_LNG = 139.6917100;
-const DEFAULT_ZOOM = 10;
+const DEFAULT_ZOOM = 13;
 
 const map = L.map('map-canvas')
   .on('load', () => {

@@ -4,26 +4,20 @@ const cardTemplateElement = document.querySelector('#card')
 
 const mapFragment = document.createDocumentFragment();
 
+const FLAT = 'flat';
+const BUNGALOW = 'bungalow';
+const HOUSE = 'house';
+const PALACE = 'palace';
+
 const TypesTranslation = {
-  FLAT: 'Квартира',
-  BUNGALOW: 'Бунгало',
-  HOUSE: 'Дом',
-  PALACE: 'Дворец',
+  [FLAT]: 'Квартира',
+  [BUNGALOW]: 'Бунгало',
+  [HOUSE]: 'Дом',
+  [PALACE]: 'Дворец',
 };
 
 const translateType = function (type) {
-  switch (type) {
-    case 'flat':
-      return TypesTranslation.FLAT;
-    case  'bungalow':
-      return TypesTranslation.BUNGALOW;
-    case 'house':
-      return TypesTranslation.HOUSE;
-    case 'palace':
-      return TypesTranslation.PALACE;
-    default:
-      return 'Не определено';
-  }
+  return TypesTranslation[type] || 'Не определено';
 };
 
 const generateCard = (offer, author) => {

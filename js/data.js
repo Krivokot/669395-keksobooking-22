@@ -47,7 +47,7 @@ const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-const ADVS_COUNT = 2;
+const ADVS_COUNT = 10;
 const LONGITUDE_MIN = 139.70000;
 const LONGITUDE_MAX = 139.80000;
 const LATITUDE_MIN = 35.65000;
