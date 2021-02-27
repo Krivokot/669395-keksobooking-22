@@ -47,7 +47,7 @@ const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-const ADVS_COUNT = 1
+const ADVS_COUNT = 2;
 const LONGITUDE_MIN = 139.70000;
 const LONGITUDE_MAX = 139.80000;
 const LATITUDE_MIN = 35.65000;
@@ -58,10 +58,6 @@ const ROOMS_MIN = 1;
 const ROOMS_MAX = 5;
 const PRICE_MIN = 1000;
 const PRICE_MAX = 20000;
-
-const x = getRandomFloat(LATITUDE_MIN, LATITUDE_MAX);
-const y = getRandomFloat(LONGITUDE_MIN, LONGITUDE_MAX);
-
 
 const getRandomArrayElement = function (elements) {
 
@@ -82,13 +78,16 @@ const getRandomArrayElements = function (elements) {
 }
 
 const generateAdvertsmentsItem = () => {
+  const x = getRandomFloat(LATITUDE_MIN, LATITUDE_MAX);
+  const y = getRandomFloat(LONGITUDE_MIN, LONGITUDE_MAX);
+  
   return {
     author: {
       avatar: `img/avatars/user0${getRandomInt(1,8)}.png`,
     },
     location: {
-      x: x,
-      y: y,
+      lng: x,
+      lat: y,
     },
     offer: {
       title: getRandomArrayElement(TITLES),

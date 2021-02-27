@@ -1,5 +1,6 @@
 const advertsForm = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
+const addressInput = document.querySelector('#address');
 
 
 advertsForm.classList.add('ad-form--disabled');
@@ -14,4 +15,4 @@ advertsForm.childNodes.forEach(element => {
     element.disabled = true;
 });
 
-export {advertsForm, mapFilter};
+export {advertsForm, mapFilter, addressInput};

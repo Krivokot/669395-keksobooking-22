@@ -1,70 +1,90 @@
-import {generateAdvertsments} from './data.js';
+import {advertsForm, mapFilter, addressInput} from "./form.js";
+import {generateAdvertsments} from "./data.js";
+import {generateCard} from "./card.js";
 
-const cardTemplate = document.querySelector('#card')
-  .content
-  .querySelector('.popup');
+const CITY_LAT = 35.6894; 
+const CITY_LNG = 139.6917100;
 
-const map = document.querySelector('.map__canvas');
+const map = L.map('map-canvas')
+    .on('load', () => {
 
-const advertsCollection = generateAdvertsments();
-
-const mapFragment = document.createDocumentFragment();
-
-const TypesTranslation = {
-  FLAT: 'Квартира',
-  BUNGALOW: 'Бунгало',
-  HOUSE: 'Дом',
-  PALACE: 'Дворец',
-};
-
-const translateType = function (type) {
-  switch (type) {
-    case 'flat':
-      return TypesTranslation.FLAT;
-    case  'bungalow':
-      return TypesTranslation.BUNGALOW;
-    case 'house':
-      return TypesTranslation.HOUSE;
-    case 'palace':
-      return TypesTranslation.PALACE;
-    default:
-      return 'Не определено';
-  }
-};
-
-advertsCollection.forEach(({offer, author}) => {
-  const cardElement = cardTemplate.cloneNode(true);
-
-  const changePopupElementText = function (elementClass, data) {
-    cardElement.querySelector(elementClass).textContent = data;
-
-  };
-
-  const updateFeaturesState = function (items) {
-
-    const featuresElement = cardElement.querySelector('.popup__features');
-    const featuresTemplate = featuresElement.cloneNode(true);
-    featuresElement.innerHTML = '';
-
-    items.forEach(item => {
-      featuresElement.appendChild(featuresTemplate.querySelector(`.popup__feature--${item}`));
-    });
-
-  };
-
-  changePopupElementText('.popup__title', offer.title);
-  changePopupElementText('.popup__text--address', offer.address);
-  changePopupElementText('.popup__text--price', `${offer.price} ₽/ночь`);
-  changePopupElementText('.popup__type', translateType(offer.type));
-  changePopupElementText('.popup__text--capacity', `${offer.rooms} комнаты для ${offer.guests} гостей`);
-  changePopupElementText('.popup__text--time', `Заезд после ${offer.checkin} выезд до ${offer.checkout}`);
-  updateFeaturesState(offer.features);
-  changePopupElementText('.popup__description', offer.description);
-  cardElement.querySelector('.popup__photo').src = offer.photos;
-  cardElement.querySelector('.popup__avatar').src = author.avatar;
+        advertsForm.classList.remove('ad-form--disabled');
+        mapFilter.classList.remove('map__filters--disabled');
 
 
-  mapFragment.appendChild(cardElement);
+        mapFilter.childNodes.forEach(element => {
+            element.disabled = false;
+        });
+
+        advertsForm.childNodes.forEach(element => {
+            element.disabled = false;
+        });
+    })
+    .setView({
+        lat: CITY_LAT,
+        lng: CITY_LNG,
+    }, 10);
+
+L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+
+  const mainPinIcon = L.icon({
+    iconUrl: 'img/main-pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 26],
+  });
+
+  const mainMarker = L.marker(
+    {
+      lat: CITY_LAT,
+      lng: CITY_LNG,
+    },
+    {
+      draggable: true,
+      icon: mainPinIcon,
+    },
+  );
+
+
+  const x = mainMarker._latlng.lng.toFixed(5);
+  const y = mainMarker._latlng.lat.toFixed(5);
+
+mainMarker.on('moveend', () => {
+    const x = mainMarker._latlng.lng.toFixed(5);
+    const y = mainMarker._latlng.lat.toFixed(5);
+    
+    addressInput.value = `${x}, ${y}`;
+
+  });
+
+  addressInput.value = `${x}, ${y}`;
+
+mainMarker.addTo(map);
+
+const points = generateAdvertsments();
+
+const pinIcon = L.icon({
+    iconUrl: 'img/pin.svg',
+    iconSize: [42, 42],
+    iconAnchor: [21, 21],
+  });
+
+points.forEach((point) => {
+    const marker = L.marker({
+        lat: point.location.lng,
+        lng: point.location.lat,
+      
+        },
+        {
+        icon: pinIcon,
+        },
+    );
+
+    marker
+        .addTo(map)
+        .bindPopup(generateCard(point.offer, point.author));
 });
-
-map.appendChild(mapFragment);
