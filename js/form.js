@@ -8,11 +8,11 @@ mapFilter.classList.add('map__filters--disabled');
 
 
 mapFilter.childNodes.forEach(element => {
-    element.disabled = true;
+  element.disabled = true;
 });
 
 advertsForm.childNodes.forEach(element => {
-    element.disabled = true;
+  element.disabled = true;
 });
 
 export {advertsForm, mapFilter, addressInput};

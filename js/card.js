@@ -1,10 +1,6 @@
-import {generateAdvertsments} from './data.js';
-
 const cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
-
-const advertsCollection = generateAdvertsments();
 
 const mapFragment = document.createDocumentFragment();
 
