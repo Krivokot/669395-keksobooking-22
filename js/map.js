@@ -8,24 +8,24 @@ const CITY_LAT = 35.6894;
 const CITY_LNG = 139.6917100;
 
 const map = L.map('map-canvas')
-.on('load', () => {
+  .on('load', () => {
 
     advertsForm.classList.remove('ad-form--disabled');
     mapFilter.classList.remove('map__filters--disabled');
 
 
     mapFilter.childNodes.forEach(element => {
-        element.disabled = false;
+      element.disabled = false;
     });
 
     advertsForm.childNodes.forEach(element => {
-        element.disabled = false;
+      element.disabled = false;
     });
-})
-.setView({
+  })
+  .setView({
     lat: CITY_LAT,
     lng: CITY_LNG,
-}, 10);
+  }, 10);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -77,16 +77,16 @@ const pinIcon = L.icon({
 
 points.forEach((point) => {
   const marker = L.marker({
-      lat: point.location.lng,
-      lng: point.location.lat,
+    lat: point.location.lng,
+    lng: point.location.lat,
     
-      },
-      {
-      icon: pinIcon,
-      },
+    },
+    {
+    icon: pinIcon,
+    },
   );
 
   marker
-      .addTo(map)
-      .bindPopup(generateCard(point.offer, point.author));
+    .addTo(map)
+    .bindPopup(generateCard(point.offer, point.author));
 });
