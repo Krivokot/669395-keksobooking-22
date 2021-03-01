@@ -53,7 +53,7 @@ const generateCard = (offer, author) => {
 
 
   return mapFragment.appendChild(cardElement);
-  
+
 };
 
-export {generateCard};
+export {generateCard, FLAT, BUNGALOW, HOUSE, PALACE};
