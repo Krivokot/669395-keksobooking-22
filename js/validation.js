@@ -90,5 +90,5 @@ const syncCapacityValue = (evt) => {
   }
 }
 
-  roomNumberElement.addEventListener('change', syncCapacityValue);
+roomNumberElement.addEventListener('change', syncCapacityValue);
 
