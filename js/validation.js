@@ -13,7 +13,6 @@ const minPriceValue = {
 
 const getTypePrice = (evt) => {
   priceElement.value = null;
-  console.log(priceElement.placeholder);
   switch (evt.target.value) {
     case BUNGALOW:
       return priceElement.placeholder = minPriceValue.BUNGALOW,
@@ -69,27 +68,27 @@ const updateDefaultCapacityDisabled = (value) => {
 updateDefaultCapacityDisabled(true);
 
 const syncCapacityValue = (evt) => {
-    switch (evt.target.value) {
-      case '1':
-        return capacityElement.children[2].selected = true, 
-        updateDefaultCapacityDisabled(true);
-      case '2':
-        updateDefaultCapacityDisabled(false);
-        return capacityElement.children[1].selected = true,
-        capacityElement.children[0].disabled = true,
-        capacityElement.children[3].disabled = true;
-      case '3':
-        updateDefaultCapacityDisabled(false);
-        return capacityElement.children[0].selected = true,
-        capacityElement.children[3].disabled = true;
-      case '100':
-        updateDefaultCapacityDisabled(false);
-        return capacityElement.children[3].selected = true,
-        capacityElement.children[0].disabled = true,
-        capacityElement.children[1].disabled = true,
-        capacityElement.children[2].disabled = true;
-    }
+  switch (evt.target.value) {
+    case '1':
+      return capacityElement.children[2].selected = true, 
+      updateDefaultCapacityDisabled(true);
+    case '2':
+      updateDefaultCapacityDisabled(false);
+      return capacityElement.children[1].selected = true,
+      capacityElement.children[0].disabled = true,
+      capacityElement.children[3].disabled = true;
+    case '3':
+      updateDefaultCapacityDisabled(false);
+      return capacityElement.children[0].selected = true,
+      capacityElement.children[3].disabled = true;
+    case '100':
+      updateDefaultCapacityDisabled(false);
+      return capacityElement.children[3].selected = true,
+      capacityElement.children[0].disabled = true,
+      capacityElement.children[1].disabled = true,
+      capacityElement.children[2].disabled = true;
   }
+}
 
   roomNumberElement.addEventListener('change', syncCapacityValue);
 

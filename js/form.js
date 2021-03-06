@@ -1,5 +1,3 @@
-import { FLAT, BUNGALOW, HOUSE, PALACE } from './card.js';
-
 const advertsFormElement = document.querySelector('.ad-form');
 const mapFilterElement = document.querySelector('.map__filters');
 const addressInputElement = document.querySelector('#address');
