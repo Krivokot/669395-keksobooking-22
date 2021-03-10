@@ -1,7 +1,7 @@
 /* global L:readonly */
 
 import {advertsFormElement, mapFilterElement, addressInputElement} from './form.js';
-import {generateAdvertsments} from './data.js';
+import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';
 
 const CITY_LAT = 35.6894; 
@@ -65,7 +65,7 @@ addressInputElement.value = `${x}, ${y}`;
 
 mainMarker.addTo(map);
 
-const points = generateAdvertsments();
+let points;
 
 const pinIcon = L.icon({
   iconUrl: 'img/pin.svg',

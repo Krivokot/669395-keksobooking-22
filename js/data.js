@@ -106,6 +106,9 @@ const generateAdvertsmentsItem = () => {
 };
 
 
+
+
 const generateAdvertsments = () => new Array(ADVS_COUNT).fill(null).map(() => generateAdvertsmentsItem());
 
-export {generateAdvertsments};
+
+
