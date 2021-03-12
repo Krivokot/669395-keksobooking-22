@@ -25,14 +25,14 @@ submitButton.addEventListener('submit', (evt) => {
   const formData = new FormData(evt.target);
 
   postData(formData)
-  .then(() => {
-    const successSendPopupTemplate = document.querySelector('#success').content;
-    mainElement.insertBefore(successSendPopupTemplate, promoElement);
-  })
-  .catch((err) => {
-    const errorSendPopupTemplate = document.querySelector('#error').content;
-    mainElement.insertBefore(errorSendPopupTemplate, promoElement);
-  })
+    .then(() => {
+      const successSendPopupTemplate = document.querySelector('#success').content;
+      mainElement.insertBefore(successSendPopupTemplate, promoElement);
+    })
+    .catch((err) => {
+      const errorSendPopupTemplate = document.querySelector('#error').content;
+      mainElement.insertBefore(errorSendPopupTemplate, promoElement);
+    })
 })
 
 export {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement};
