@@ -28,7 +28,7 @@ const generateCard = (offer, author) => {
 
   };
 
-  const updateFeaturesState = function (items) {
+  const updateFeaturesState = (items) => {
 
     const featuresElement = cardElement.querySelector('.popup__features');
     const featuresTemplateElement = featuresElement.cloneNode(true);
@@ -40,6 +40,20 @@ const generateCard = (offer, author) => {
 
   };
 
+  const updatePhotosState = (photos) => {
+    const photosBlock = cardElement.querySelector('.popup__photos');
+    const photoElement = cardElement.querySelector('.popup__photo');
+    photosBlock.innerText = '';
+  
+    photos.forEach((photo) => {
+      
+      const photoTemplate = photoElement.cloneNode(true);
+      photoTemplate.src = photo;
+  
+      photosBlock.appendChild(photoTemplate);
+    })
+  }
+
   changePopupElementText('.popup__title', offer.title);
   changePopupElementText('.popup__text--address', offer.address);
   changePopupElementText('.popup__text--price', `${offer.price} ₽/ночь`);
@@ -48,9 +62,8 @@ const generateCard = (offer, author) => {
   changePopupElementText('.popup__text--time', `Заезд после ${offer.checkin} выезд до ${offer.checkout}`);
   updateFeaturesState(offer.features);
   changePopupElementText('.popup__description', offer.description);
-  cardElement.querySelector('.popup__photo').src = offer.photos;
+  updatePhotosState(offer.photos);
   cardElement.querySelector('.popup__avatar').src = author.avatar;
-
 
   return mapFragment.appendChild(cardElement);
 
