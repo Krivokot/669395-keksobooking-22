@@ -1,11 +1,10 @@
 /* global L:readonly */
 
-import {advertsFormElement, mapFilterElement, addressInputElement} from './form.js';
+import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement, resetButton} from './form.js';
 import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';
-import { mainElement, promoElement } from './form.js';
 
-const CITY_LAT = 35.6894; 
+const CITY_LAT = 35.6894;
 const CITY_LNG = 139.6917100;
 const DEFAULT_ZOOM = 13;
 
@@ -51,25 +50,35 @@ export function initMap() {
     },
   );
 
+  const setDefaultAddressInputValue = () => {
+    const x = mainMarker._latlng.lng.toFixed(5);
+    const y = mainMarker._latlng.lat.toFixed(5);
 
-  const x = mainMarker._latlng.lng.toFixed(5);
-  const y = mainMarker._latlng.lat.toFixed(5);
+    addressInputElement.value = `${x}, ${y}`;
+  }
+
 
   mainMarker.on('moveend', () => {
     const x = mainMarker._latlng.lng.toFixed(5);
     const y = mainMarker._latlng.lat.toFixed(5);
-    
+
     addressInputElement.value = `${x}, ${y}`;
 
   });
 
-  addressInputElement.value = `${x}, ${y}`;
+  setDefaultAddressInputValue()
 
   mainMarker.addTo(map);
 
-  fetchData().then(data => addPointsToMap(map, data)).catch((err) => {
+  fetchData().then(data => addPointsToMap(map, data)).catch(() => {
       const errorGetPopupTemplate = document.querySelector('#errorGet').content;
       mainElement.insertBefore(errorGetPopupTemplate, promoElement);
+    })
+
+    resetButton.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      mainMarker.setLatLng([CITY_LAT, CITY_LNG]);
+      setDefaultAddressInputValue();
     })
 }
 
@@ -79,18 +88,18 @@ function addPointsToMap(map, points) {
     iconSize: [42, 42],
     iconAnchor: [21, 21],
   });
-  
+
   points.forEach((point) => {
     const marker = L.marker({
       lat: point.location.lat,
       lng: point.location.lng,
-      
+
     },
     {
       icon: pinIcon,
     },
     );
-  
+
     marker.addTo(map).bindPopup(generateCard(point.offer, point.author));
   });
 }
