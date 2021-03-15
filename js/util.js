@@ -20,4 +20,8 @@ const getRandomInt = function (start, end) {
 
 };
 
-export {getRandomFloat, getRandomInt};
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+export {getRandomFloat, getRandomInt, isEscEvent};

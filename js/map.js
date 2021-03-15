@@ -1,6 +1,6 @@
 /* global L:readonly */
 
-import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement, resetButton} from './form.js';
+import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement, resetButton, resetForm} from './form.js';
 import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';
 
@@ -33,6 +33,15 @@ export function initMap() {
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   ).addTo(map);
 
+  addMainPointToMap(map);
+
+  fetchData().then(data => addPointsToMap(map, data)).catch(() => {
+    const errorGetPopupTemplate = document.querySelector('#errorGet').content;
+    mainElement.insertBefore(errorGetPopupTemplate, promoElement);
+  })
+}
+
+function addMainPointToMap(map) {
   const mainPinIcon = L.icon({
     iconUrl: 'img/main-pin.svg',
     iconSize: [52, 52],
@@ -50,36 +59,28 @@ export function initMap() {
     },
   );
 
-  const setDefaultAddressInputValue = () => {
+  const setAddressInputValue = () => {
     const x = mainMarker._latlng.lng.toFixed(5);
     const y = mainMarker._latlng.lat.toFixed(5);
 
     addressInputElement.value = `${x}, ${y}`;
   }
 
+  setAddressInputValue();
 
   mainMarker.on('moveend', () => {
-    const x = mainMarker._latlng.lng.toFixed(5);
-    const y = mainMarker._latlng.lat.toFixed(5);
-
-    addressInputElement.value = `${x}, ${y}`;
+    setAddressInputValue();
 
   });
 
-  setDefaultAddressInputValue()
-
   mainMarker.addTo(map);
 
-  fetchData().then(data => addPointsToMap(map, data)).catch(() => {
-      const errorGetPopupTemplate = document.querySelector('#errorGet').content;
-      mainElement.insertBefore(errorGetPopupTemplate, promoElement);
-    })
-
-    resetButton.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      mainMarker.setLatLng([CITY_LAT, CITY_LNG]);
-      setDefaultAddressInputValue();
-    })
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetForm();
+    mainMarker.setLatLng([CITY_LAT, CITY_LNG]);
+    setAddressInputValue();
+  })
 }
 
 function addPointsToMap(map, points) {
@@ -104,3 +105,4 @@ function addPointsToMap(map, points) {
   });
 }
 
+export {addMainPointToMap};
