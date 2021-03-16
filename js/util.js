@@ -1,3 +1,7 @@
+const CITY_LAT = 35.6894;
+const CITY_LNG = 139.6917100;
+const DEFAULT_ZOOM = 13;
+
 const getRandomFloat = function (start, end, dot = 5) {
 
   if (start > end) {
@@ -20,4 +24,8 @@ const getRandomInt = function (start, end) {
 
 };
 
-export {getRandomFloat, getRandomInt};
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+export {getRandomFloat, getRandomInt, isEscEvent, CITY_LAT, CITY_LNG, DEFAULT_ZOOM};
