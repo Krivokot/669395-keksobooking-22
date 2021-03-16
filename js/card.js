@@ -44,12 +44,12 @@ const generateCard = (offer, author) => {
     const photosBlock = cardElement.querySelector('.popup__photos');
     const photoElement = cardElement.querySelector('.popup__photo');
     photosBlock.innerText = '';
-  
+
     photos.forEach((photo) => {
-      
+
       const photoTemplate = photoElement.cloneNode(true);
       photoTemplate.src = photo;
-  
+
       photosBlock.appendChild(photoTemplate);
     })
   }

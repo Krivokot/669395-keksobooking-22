@@ -1,6 +1,7 @@
 import {postData} from './fetch.js';
 import { isEscEvent } from './util.js';
-import './map.js';
+import {addMainPointToMap} from './map.js';
+import {mapView} from './main.js';
 
 const advertsFormElement = document.querySelector('.ad-form');
 const mapFilterElement = document.querySelector('.map__filters');
@@ -23,8 +24,13 @@ advertsFormElement.childNodes.forEach(element => {
 
 const resetForm = () => {
   advertsFormElement.reset();
-
+  addMainPointToMap(mapView);
 }
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+})
 
 const closeModal = (popup) => {
   popup.classList.add('hidden');
@@ -72,4 +78,4 @@ advertsFormElement.addEventListener('submit', (evt) => {
     })
 })
 
-export {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement, resetButton, resetForm};
+export {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement};

@@ -1,6 +1,9 @@
+const API_GET_URL = 'https://22.javascript.pages.academy/keksobooking/data';
+const API_POST_URL = 'https://22.javascript.pages.academy/keksobooking';
+
 const fetchData = () => {
   return fetch (
-    'https://22.javascript.pages.academy/keksobooking/data',
+    API_GET_URL,
   )
     .then((response) => {
       return response.json()
@@ -9,11 +12,10 @@ const fetchData = () => {
 
 const postData = (data) => {
   return fetch (
-    'https://22.javascript.pages.academy/keksobooking',
+    API_POST_URL,
     {
       method: 'POST',
       body: data,
-      // credentials: multipart/form-data,
     },
   )
 };

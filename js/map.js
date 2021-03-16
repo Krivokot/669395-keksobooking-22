@@ -1,12 +1,9 @@
 /* global L:readonly */
 
-import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement, resetButton, resetForm} from './form.js';
+import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement} from './form.js';
 import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';
-
-const CITY_LAT = 35.6894;
-const CITY_LNG = 139.6917100;
-const DEFAULT_ZOOM = 13;
+import { CITY_LAT, CITY_LNG, DEFAULT_ZOOM } from './util.js';
 
 export function initMap() {
   const map = L.map('map-canvas')
@@ -36,12 +33,15 @@ export function initMap() {
   addMainPointToMap(map);
 
   fetchData().then(data => addPointsToMap(map, data)).catch(() => {
-    const errorGetPopupTemplate = document.querySelector('#errorGet').content;
+    const errorGetPopupTemplate = document.querySelector('#error-get').content;
     mainElement.insertBefore(errorGetPopupTemplate, promoElement);
   })
+
+  return map;
 }
 
-function addMainPointToMap(map) {
+export function addMainPointToMap(map) {
+
   const mainPinIcon = L.icon({
     iconUrl: 'img/main-pin.svg',
     iconSize: [52, 52],
@@ -75,15 +75,9 @@ function addMainPointToMap(map) {
 
   mainMarker.addTo(map);
 
-  resetButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    resetForm();
-    mainMarker.setLatLng([CITY_LAT, CITY_LNG]);
-    setAddressInputValue();
-  })
 }
 
-function addPointsToMap(map, points) {
+export function addPointsToMap(map, points) {
   const pinIcon = L.icon({
     iconUrl: 'img/pin.svg',
     iconSize: [42, 42],
@@ -102,7 +96,8 @@ function addPointsToMap(map, points) {
     );
 
     marker.addTo(map).bindPopup(generateCard(point.offer, point.author));
+
   });
 }
 
-export {addMainPointToMap};
+
