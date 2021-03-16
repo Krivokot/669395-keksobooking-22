@@ -37,18 +37,21 @@ export function initMap() {
     mainElement.insertBefore(errorGetPopupTemplate, promoElement);
   })
 
+
   return map;
 }
 
+const mainPinIcon = L.icon({
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 26],
+});
+
+let mainMarker;
+
 export function addMainPointToMap(map) {
 
-  const mainPinIcon = L.icon({
-    iconUrl: 'img/main-pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 26],
-  });
-
-  const mainMarker = L.marker(
+  mainMarker = L.marker(
     {
       lat: CITY_LAT,
       lng: CITY_LNG,
@@ -77,6 +80,7 @@ export function addMainPointToMap(map) {
 
 }
 
+
 export function addPointsToMap(map, points) {
   const pinIcon = L.icon({
     iconUrl: 'img/pin.svg',
@@ -100,4 +104,6 @@ export function addPointsToMap(map, points) {
   });
 }
 
-
+export function removeMainMarker () {
+  mainMarker.remove();
+}
