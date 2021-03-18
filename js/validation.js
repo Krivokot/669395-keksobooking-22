@@ -70,7 +70,7 @@ updateDefaultCapacityDisabled(true);
 const syncCapacityValue = (evt) => {
   switch (evt.target.value) {
     case '1':
-      return capacityElement.children[2].selected = true, 
+      return capacityElement.children[2].selected = true,
       updateDefaultCapacityDisabled(true);
     case '2':
       updateDefaultCapacityDisabled(false);

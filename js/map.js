@@ -1,9 +1,8 @@
-/* global L:readonly */
-
 import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement} from './form.js';
 import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';
 import { CITY_LAT, CITY_LNG, DEFAULT_ZOOM } from './util.js';
+import { setFilterChangeListener } from './filters.js';
 
 export function initMap() {
   const map = L.map('map-canvas')
@@ -33,7 +32,7 @@ export function initMap() {
   addMainPointToMap(map);
 
   fetchData().then(data => addPointsToMap(map, data)).catch(() => {
-    const errorGetPopupTemplate = document.querySelector('#error-get').content;
+    const errorGetPopupTemplate = document.querySelector('#error-template').content;
     mainElement.insertBefore(errorGetPopupTemplate, promoElement);
   })
 
@@ -41,15 +40,14 @@ export function initMap() {
   return map;
 }
 
-const mainPinIcon = L.icon({
-  iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 26],
-});
-
 let mainMarker;
 
 export function addMainPointToMap(map) {
+  const mainPinIcon = L.icon({
+    iconUrl: 'img/main-pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 26],
+  });
 
   mainMarker = L.marker(
     {
@@ -77,9 +75,9 @@ export function addMainPointToMap(map) {
   });
 
   mainMarker.addTo(map);
-
 }
 
+let markersArray = [];
 
 export function addPointsToMap(map, points) {
   const pinIcon = L.icon({
@@ -88,22 +86,30 @@ export function addPointsToMap(map, points) {
     iconAnchor: [21, 21],
   });
 
-  points.forEach((point) => {
-    const marker = L.marker({
-      lat: point.location.lat,
-      lng: point.location.lng,
+  setFilterChangeListener(points, filteredPoints => {
 
-    },
-    {
-      icon: pinIcon,
-    },
-    );
+    filteredPoints.forEach((filter) => {
+      let markers = L.marker({
+        lat: filter.location.lat,
+        lng: filter.location.lng,
 
-    marker.addTo(map).bindPopup(generateCard(point.offer, point.author));
+      },
+      {
+        icon: pinIcon,
+      },
+      );
+      markersArray.push(markers)
+      markers.addTo(map).bindPopup(generateCard(filter.offer, filter.author));
 
+    });
   });
 }
 
+
 export function removeMainMarker () {
   mainMarker.remove();
+}
+
+export function removeMarkers () {
+  markersArray.forEach(marker => marker.remove());
 }
