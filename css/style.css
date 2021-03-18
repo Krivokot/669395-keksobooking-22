@@ -923,7 +923,7 @@ fieldset {
 
 .success,
 .error,
-.error-get {
+.error__template {
   position: fixed;
   top: 0;
   left: 0;
@@ -942,6 +942,8 @@ fieldset {
   vertical-align: middle;
 
   background-color: rgba(0, 0, 0, 0.8);
+
+  display: none;
 }
 
 .success__message,

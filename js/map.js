@@ -4,6 +4,7 @@ import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, 
 import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';
 import { CITY_LAT, CITY_LNG, DEFAULT_ZOOM } from './util.js';
+import { setHouseTypeChangeListener } from './filters.js';
 
 export function initMap() {
   const map = L.map('map-canvas')
@@ -33,7 +34,7 @@ export function initMap() {
   addMainPointToMap(map);
 
   fetchData().then(data => addPointsToMap(map, data)).catch(() => {
-    const errorGetPopupTemplate = document.querySelector('#error-get').content;
+    const errorGetPopupTemplate = document.querySelector('#error-template').content;
     mainElement.insertBefore(errorGetPopupTemplate, promoElement);
   })
 
@@ -41,15 +42,14 @@ export function initMap() {
   return map;
 }
 
-const mainPinIcon = L.icon({
-  iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 26],
-});
-
 let mainMarker;
 
 export function addMainPointToMap(map) {
+  const mainPinIcon = L.icon({
+    iconUrl: 'img/main-pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 26],
+  });
 
   mainMarker = L.marker(
     {
@@ -80,6 +80,7 @@ export function addMainPointToMap(map) {
 
 }
 
+let marker;
 
 export function addPointsToMap(map, points) {
   const pinIcon = L.icon({
@@ -88,22 +89,30 @@ export function addPointsToMap(map, points) {
     iconAnchor: [21, 21],
   });
 
-  points.forEach((point) => {
-    const marker = L.marker({
-      lat: point.location.lat,
-      lng: point.location.lng,
+  setHouseTypeChangeListener(points, filteredPoints => {
+    filteredPoints.forEach((filter) => {
+      marker = L.marker({
+        lat: filter.location.lat,
+        lng: filter.location.lng,
 
-    },
-    {
-      icon: pinIcon,
-    },
-    );
+      },
+      {
+        icon: pinIcon,
+      },
+      );
 
-    marker.addTo(map).bindPopup(generateCard(point.offer, point.author));
+      marker.addTo(map).bindPopup(generateCard(filter.offer, filter.author));
 
+    });
   });
+
+
 }
 
 export function removeMainMarker () {
   mainMarker.remove();
+}
+
+export function removeMarker () {
+  marker.remove();
 }
