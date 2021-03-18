@@ -77,10 +77,9 @@ export function addMainPointToMap(map) {
   });
 
   mainMarker.addTo(map);
-
 }
 
-let marker;
+let markersArray = [];
 
 export function addPointsToMap(map, points) {
   const pinIcon = L.icon({
@@ -90,8 +89,9 @@ export function addPointsToMap(map, points) {
   });
 
   setHouseTypeChangeListener(points, filteredPoints => {
+
     filteredPoints.forEach((filter) => {
-      marker = L.marker({
+      let markers = L.marker({
         lat: filter.location.lat,
         lng: filter.location.lng,
 
@@ -100,19 +100,18 @@ export function addPointsToMap(map, points) {
         icon: pinIcon,
       },
       );
-
-      marker.addTo(map).bindPopup(generateCard(filter.offer, filter.author));
+      markersArray.push(markers)
+      markers.addTo(map).bindPopup(generateCard(filter.offer, filter.author));
 
     });
   });
-
-
 }
+
 
 export function removeMainMarker () {
   mainMarker.remove();
 }
 
-export function removeMarker () {
-  marker.remove();
+export function removeMarkers () {
+  markersArray.forEach(marker => marker.remove());
 }

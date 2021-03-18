@@ -48,9 +48,11 @@ const closeModalByAction = (popupType) => {
       closeModal(popupType);
     }
   })
+
+
 }
 
-const addModal = (templateId) => {
+const showModal = (templateId) => {
   const popupTemplate = document.querySelector(templateId).content;
   mainElement.insertBefore(popupTemplate, promoElement);
 }
@@ -62,7 +64,7 @@ advertsFormElement.addEventListener('submit', (evt) => {
   postData(formData)
     .then((response) => {
       if (response.ok) {
-        addModal('#success');
+        showModal('#success');
         resetForm();
         const sendPopup = document.querySelector('.success');
         sendPopup.classList.remove('hidden');
@@ -71,11 +73,16 @@ advertsFormElement.addEventListener('submit', (evt) => {
       }
     })
     .catch(() => {
-      addModal('#error');
+      showModal('#error');
       const errorPopup = document.querySelector('.error');
       errorPopup.classList.remove('hidden');
 
       closeModalByAction(errorPopup);
+
+      const errorButton = document.querySelector('.error__button');
+      errorButton.addEventListener('click', () => {
+        errorPopup.classList.add('hidden');
+      })
     })
 })
 

@@ -1,9 +1,8 @@
-const API_GET_URL = 'https://22.javascript.pages.academy/keksobooking/data';
-const API_POST_URL = 'https://22.javascript.pages.academy/keksobooking';
+const API_URL = 'https://22.javascript.pages.academy/keksobooking';
 
 const fetchData = () => {
   return fetch (
-    API_GET_URL,
+    `${API_URL}/data`,
   )
     .then((response) => {
       return response.json()
@@ -12,7 +11,7 @@ const fetchData = () => {
 
 const postData = (data) => {
   return fetch (
-    API_POST_URL,
+    API_URL,
     {
       method: 'POST',
       body: data,

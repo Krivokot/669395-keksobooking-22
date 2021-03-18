@@ -1,28 +1,23 @@
 const mapFiltersElement = document.querySelector('.map__filters');
 const filterHousingType = mapFiltersElement.querySelector('#housing-type');
 
-import { removeMarker } from './map.js';
+import { removeMarkers } from './map.js';
 
-
-const filterByType = (items) => items.offer.type === filterHousingType.value || filterHousingType.value === 'any';
+const filterByType = (items) => {
+  return items.offer.type === filterHousingType.value || filterHousingType.value === 'any';
+}
 
 function createFilter (points, filtered) {
-  const filteredPoints = points.filter(item => filterByType(item))
+  const filteredPoints = points.filter(item => filterByType(item)).slice(0, 10)
   filtered(filteredPoints);
-      // removeMarker();
 }
 
 function setHouseTypeChangeListener (points, filtered) {
-
-    filterHousingType.addEventListener('change', createFilter(points, filtered))
+  createFilter(points, filtered)
+  filterHousingType.addEventListener('change', () => {
+    removeMarkers();
+    createFilter(points, filtered)
+  })
 }
 
 export {setHouseTypeChangeListener};
-
-// function setHouseTypeChangeListener (pointsm func) {
-
-//   filterHousingType.addEventListener('change', (evt) => {
-//     const filteredPoints = points.filter(item => item.offer.type === evt.target.value)
-//     func(filteredPoints);
-//   })
-// }
