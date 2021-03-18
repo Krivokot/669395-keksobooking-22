@@ -1,3 +1,5 @@
+/* global L:readonly */
+
 import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement} from './form.js';
 import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';

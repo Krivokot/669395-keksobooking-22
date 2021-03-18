@@ -21,7 +21,7 @@ function createFilter (points, filtered) {
   const filteredPoints = points.filter(item =>
     filterByType(item) &&
     filterByRooms(item) &&
-    filterByGuests(item)
+    filterByGuests(item),
 
   ).slice(0, 10)
   filtered(filteredPoints);
