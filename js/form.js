@@ -1,6 +1,6 @@
-import {postData} from './fetch.js';
+import {postData, fetchData} from './fetch.js';
 import { isEscEvent } from './util.js';
-import {addMainPointToMap, removeMainMarker} from './map.js';
+import {addMainPointToMap, removeMainMarker, addPointsToMap} from './map.js';
 import {mapView} from './main.js';
 import {mapFiltersElement} from './filters.js';
 
@@ -28,6 +28,10 @@ const resetForm = () => {
   mapFiltersElement.reset();
   removeMainMarker();
   addMainPointToMap(mapView);
+  fetchData().then(data => addPointsToMap(mapView, data)).catch(() => {
+    const errorGetPopupTemplate = document.querySelector('#error-template').content;
+    mainElement.insertBefore(errorGetPopupTemplate, promoElement);
+  })
 }
 
 resetButton.addEventListener('click', (evt) => {
