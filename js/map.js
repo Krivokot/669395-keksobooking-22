@@ -44,12 +44,13 @@ export function initMap() {
 
 let mainMarker;
 
+const mainPinIcon = L.icon({
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 26],
+});
+
 export function addMainPointToMap(map) {
-  const mainPinIcon = L.icon({
-    iconUrl: 'img/main-pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 26],
-  });
 
   mainMarker = L.marker(
     {
@@ -87,6 +88,7 @@ const pinIcon = L.icon({
   iconAnchor: [21, 21],
 });
 
+
 function drawPoints(map, filteredPoints) {
   filteredPoints.forEach((filter) => {
     let markers = L.marker({
@@ -105,7 +107,7 @@ function drawPoints(map, filteredPoints) {
 }
 
 export function addPointsToMap(map, points) {
-  
+
   setFilterChangeListener(points, filteredPoints => {
 
     drawPoints(map, filteredPoints)
