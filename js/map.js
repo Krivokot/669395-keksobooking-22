@@ -81,29 +81,34 @@ export function addMainPointToMap(map) {
 
 let markersArray = [];
 
-export function addPointsToMap(map, points) {
-  const pinIcon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [42, 42],
-    iconAnchor: [21, 21],
-  });
+const pinIcon = L.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [42, 42],
+  iconAnchor: [21, 21],
+});
 
+function drawPoints(map, filteredPoints) {
+  filteredPoints.forEach((filter) => {
+    let markers = L.marker({
+      lat: filter.location.lat,
+      lng: filter.location.lng,
+
+    },
+    {
+      icon: pinIcon,
+    },
+    );
+    markersArray.push(markers)
+    markers.addTo(map).bindPopup(generateCard(filter.offer, filter.author));
+
+  });
+}
+
+export function addPointsToMap(map, points) {
+  
   setFilterChangeListener(points, filteredPoints => {
 
-    filteredPoints.forEach((filter) => {
-      let markers = L.marker({
-        lat: filter.location.lat,
-        lng: filter.location.lng,
-
-      },
-      {
-        icon: pinIcon,
-      },
-      );
-      markersArray.push(markers)
-      markers.addTo(map).bindPopup(generateCard(filter.offer, filter.author));
-
-    });
+    drawPoints(map, filteredPoints)
   });
 }
 

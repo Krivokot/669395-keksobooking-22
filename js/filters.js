@@ -3,52 +3,48 @@
 import { removeMarkers } from './map.js';
 
 const mapFiltersElement = document.querySelector('.map__filters');
-const filterHousingType = mapFiltersElement.querySelector('#housing-type');
-const filterHousingRooms = mapFiltersElement.querySelector('#housing-rooms');
-const filterHousingGuests = mapFiltersElement.querySelector('#housing-guests');
-const filterHousingPrice = mapFiltersElement.querySelector('#housing-price');
-const filterHousingFeatures = mapFiltersElement.querySelector('#housing-features');
+const filterHousingTypeElement = mapFiltersElement.querySelector('#housing-type');
+const filterHousingRoomsElement = mapFiltersElement.querySelector('#housing-rooms');
+const filterHousingGuestsElement = mapFiltersElement.querySelector('#housing-guests');
+const filterHousingPriceElement = mapFiltersElement.querySelector('#housing-price');
+const filterHousingFeaturesElement = mapFiltersElement.querySelector('#housing-features');
 
-const LOW = 10000;
-const HIGH = 50000;
-const COUNT = 10;
+const LOW_PRICE = 10000;
+const HIGH_PRICE = 50000;
+const COUNT_MARKERS = 10;
 const DELAY = 500;
 
 const filterByType = (items) => {
-  return items.offer.type === filterHousingType.value || filterHousingType.value === 'any';
+  return items.offer.type === filterHousingTypeElement.value || filterHousingTypeElement.value === 'any';
 }
 
 const filterByRooms = (items) => {
-  return items.offer.rooms === Number(filterHousingRooms.value) || filterHousingRooms.value === 'any';
+  return items.offer.rooms === Number(filterHousingRoomsElement.value) || filterHousingRoomsElement.value === 'any';
 }
 
 const filterByGuests = (items) => {
-  return items.offer.guests === Number(filterHousingGuests.value) || filterHousingGuests.value === 'any';
+  return items.offer.guests === Number(filterHousingGuestsElement.value) || filterHousingGuestsElement.value === 'any';
 }
 
 const filterByPrice = (items) => {
-  switch (filterHousingPrice.value) {
+  switch (filterHousingPriceElement.value) {
     case 'low':
-      return items.offer.price <= LOW;
+      return items.offer.price <= LOW_PRICE;
     case 'middle':
-      return items.offer.price >= LOW && items.offer.price <= HIGH;
+      return items.offer.price >= LOW_PRICE && items.offer.price <= HIGH_PRICE;
     case 'high':
-      return items.offer.price >= HIGH;
+      return items.offer.price >= HIGH_PRICE;
     case 'any':
       return items.offer.price
   }
 }
 
-const filterByFeatures = (items) => {
-  const checkedElements = filterHousingFeatures.querySelectorAll('input:checked');
+const filterByFeatures = (item) => {
+  const checkedFeatureElements = filterHousingFeaturesElement.querySelectorAll('input:checked');
+  const checkedFeatures = []
+  checkedFeatureElements.forEach(element => checkedFeatures.push(element.value));
 
-  if (checkedElements.length === 0) {
-    return true;
-  } else {
-    for (let i = 0; i < checkedElements.length; i ++) {
-      return items.offer.features.includes(checkedElements[i].value)
-    }
-  }
+  return checkedFeatureElements.length === 0 ? true : checkedFeatures.every(checkedFeature => item.offer.features.includes(checkedFeature));
 }
 
 const createFilter = _.debounce((points, filtered) => {
@@ -59,7 +55,7 @@ const createFilter = _.debounce((points, filtered) => {
     filterByPrice(item) &&
     filterByFeatures(item),
 
-  ).slice(0, COUNT)
+  ).slice(0, COUNT_MARKERS)
   filtered(filteredPoints);
 }, DELAY)
 
