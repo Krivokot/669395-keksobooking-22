@@ -4,7 +4,8 @@ import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, 
 import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';
 import { CITY_LAT, CITY_LNG, DEFAULT_ZOOM } from './util.js';
-import { setHouseTypeChangeListener } from './filters.js';
+import { setFilterChangeListener } from './filters.js';
+
 
 export function initMap() {
   const map = L.map('map-canvas')
@@ -88,7 +89,8 @@ export function addPointsToMap(map, points) {
     iconAnchor: [21, 21],
   });
 
-  setHouseTypeChangeListener(points, filteredPoints => {
+  setFilterChangeListener(points, filteredPoints => {
+
 
     filteredPoints.forEach((filter) => {
       let markers = L.marker({

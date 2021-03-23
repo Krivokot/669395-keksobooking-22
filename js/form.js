@@ -2,6 +2,7 @@ import {postData} from './fetch.js';
 import { isEscEvent } from './util.js';
 import {addMainPointToMap, removeMainMarker} from './map.js';
 import {mapView} from './main.js';
+import {mapFiltersElement} from './filters.js';
 
 const advertsFormElement = document.querySelector('.ad-form');
 const mapFilterElement = document.querySelector('.map__filters');
@@ -24,6 +25,7 @@ advertsFormElement.childNodes.forEach(element => {
 
 const resetForm = () => {
   advertsFormElement.reset();
+  mapFiltersElement.reset();
   removeMainMarker();
   addMainPointToMap(mapView);
 }
