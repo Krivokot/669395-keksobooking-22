@@ -22,7 +22,7 @@ const translateType = function (type) {
 
 const checkNullElement = (element) => {
   if (element.children.length < 1) {
-    element.style.display = 'none'
+    element.classList.add('hidden')
   }
 }
 
@@ -34,7 +34,7 @@ const generateCard = (offer, author) => {
     popupElement.textContent = data;
 
     if (popupElement.textContent === '') {
-      popupElement.style.display = 'none'
+      popupElement.classList.add('hidden')
     }
   };
 
@@ -71,14 +71,13 @@ const generateCard = (offer, author) => {
 
   const addUserAvatar = () => {
     const popupAvatarElement =  cardElement.querySelector('.popup__avatar');
-    popupAvatarElement.src = author.avatar;
 
-    if (author.avatar === null) {
-      popupAvatarElement.style.display = 'none'
+    if (author.avatar) {
+      popupAvatarElement.src = author.avatar;
+    } else {
+      popupAvatarElement.classList.add('hidden')
     }
   }
-
-
 
   changePopupElementText('.popup__title', offer.title);
   changePopupElementText('.popup__text--address', offer.address);

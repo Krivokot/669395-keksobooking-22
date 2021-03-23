@@ -44,18 +44,23 @@ const closeModal = (popup) => {
 
 
 const closeModalByAction = (popupType) => {
-  popupType.addEventListener('click', () => {
-    closeModal(popupType);
-  })
-
-  document.addEventListener('keydown', function closeModalByKey(evt) {
+  const closeModalByKey = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       closeModal(popupType);
+      document.removeEventListener('keydown', closeModalByKey)
     }
+  }
+
+  popupType.addEventListener('click', () => {
+    closeModal(popupType);
     document.removeEventListener('keydown', closeModalByKey)
   })
+
+  document.addEventListener('keydown', closeModalByKey)
 }
+
+
 
 const showModal = (templateId) => {
   const popupTemplate = document.querySelector(templateId).content;
