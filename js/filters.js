@@ -41,22 +41,28 @@ const filterByPrice = (items) => {
 }
 
 const filterByFeatures = (item) => {
-  const checkedFeatureElements = filterHousingFeaturesElement.querySelectorAll('input:checked');
-  const checkedFeatures = []
-  checkedFeatureElements.forEach(element => checkedFeatures.push(element.value));
+  const checkedFeatureElements = Array.from(filterHousingFeaturesElement.querySelectorAll('input:checked'));
 
-  return checkedFeatureElements.length === 0 ? true : checkedFeatures.every(checkedFeature => item.offer.features.includes(checkedFeature));
+  return checkedFeatureElements.length === 0 ? true : checkedFeatureElements.every(checkedFeature => item.offer.features.includes(checkedFeature.value));
 }
 
 const createFilter = _.debounce((points, filtered) => {
-  const filteredPoints = points.filter(item =>
-    filterByType(item) &&
-    filterByRooms(item) &&
-    filterByGuests(item) &&
-    filterByPrice(item) &&
-    filterByFeatures(item),
+  const filteredPoints = [];
+  for (let point of points) {
+    if (
+      filterByType(point) &&
+      filterByRooms(point) &&
+      filterByGuests(point) &&
+      filterByPrice(point) &&
+      filterByFeatures(point)
+    ) {
+      filteredPoints.push(point);
+      if (filteredPoints.length >= COUNT_MARKERS) {
+        break;
+      }
+    }
+  }
 
-  ).slice(0, COUNT_MARKERS)
   filtered(filteredPoints);
 }, DELAY)
 

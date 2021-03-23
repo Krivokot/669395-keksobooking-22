@@ -38,7 +38,7 @@ const timeOutElement = document.querySelector('#timeout');
 
 const syncTimeInValue = (evt) => {
   timeOutElement.childNodes.forEach(element => {
-    if (evt.target.value == element.value) {
+    if (evt.target.value === element.value) {
       element.selected = true;
     }
   });
@@ -46,7 +46,7 @@ const syncTimeInValue = (evt) => {
 
 const syncTimeOutValue = (evt) => {
   timeInElement.childNodes.forEach(element => {
-    if (evt.target.value == element.value) {
+    if (evt.target.value === element.value) {
       element.selected = true;
     }
   });

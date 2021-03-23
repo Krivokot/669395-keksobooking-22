@@ -20,12 +20,22 @@ const translateType = function (type) {
   return TypesTranslation[type] || 'Не определено';
 };
 
+const checkNullElement = (element) => {
+  if (element.children.length < 1) {
+    element.style.display = 'none'
+  }
+}
+
 const generateCard = (offer, author) => {
   const cardElement = cardTemplateElement.cloneNode(true);
 
   const changePopupElementText = function (elementClass, data) {
-    cardElement.querySelector(elementClass).textContent = data;
+    const popupElement = cardElement.querySelector(elementClass);
+    popupElement.textContent = data;
 
+    if (popupElement.textContent === '') {
+      popupElement.style.display = 'none'
+    }
   };
 
   const updateFeaturesState = (items) => {
@@ -37,6 +47,8 @@ const generateCard = (offer, author) => {
     items.forEach(item => {
       featuresElement.appendChild(featuresTemplateElement.querySelector(`.popup__feature--${item}`));
     });
+
+    checkNullElement(featuresElement);
 
   };
 
@@ -51,8 +63,22 @@ const generateCard = (offer, author) => {
       photoTemplate.src = photo;
 
       photosBlock.appendChild(photoTemplate);
+
     })
+
+    checkNullElement(photosBlock);
   }
+
+  const addUserAvatar = () => {
+    const popupAvatarElement =  cardElement.querySelector('.popup__avatar');
+    popupAvatarElement.src = author.avatar;
+
+    if (author.avatar === null) {
+      popupAvatarElement.style.display = 'none'
+    }
+  }
+
+
 
   changePopupElementText('.popup__title', offer.title);
   changePopupElementText('.popup__text--address', offer.address);
@@ -63,7 +89,9 @@ const generateCard = (offer, author) => {
   updateFeaturesState(offer.features);
   changePopupElementText('.popup__description', offer.description);
   updatePhotosState(offer.photos);
-  cardElement.querySelector('.popup__avatar').src = author.avatar;
+  addUserAvatar();
+
+
 
   return mapFragment.appendChild(cardElement);
 

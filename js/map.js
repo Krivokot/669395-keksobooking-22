@@ -1,28 +1,21 @@
 /* global L:readonly */
 
-import {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement} from './form.js';
+import {advertsFormElement, addressInputElement, mainElement, promoElement} from './form.js';
 import {fetchData} from './fetch.js';
 import {generateCard} from './card.js';
 import { CITY_LAT, CITY_LNG, DEFAULT_ZOOM } from './util.js';
-import { setFilterChangeListener } from './filters.js';
+import { setFilterChangeListener, mapFiltersElement } from './filters.js';
 
 
 export function initMap() {
   const map = L.map('map-canvas')
     .on('load', () => {
-
       advertsFormElement.classList.remove('ad-form--disabled');
-      mapFilterElement.classList.remove('map__filters--disabled');
-
-
-      mapFilterElement.childNodes.forEach(element => {
-        element.disabled = false;
-      });
-
       advertsFormElement.childNodes.forEach(element => {
         element.disabled = false;
       });
     })
+
     .setView({
       lat: CITY_LAT,
       lng: CITY_LNG,
@@ -73,7 +66,7 @@ export function addMainPointToMap(map) {
 
   setAddressInputValue();
 
-  mainMarker.on('moveend', () => {
+  mainMarker.on('drag', () => {
     setAddressInputValue();
 
   });
@@ -106,6 +99,11 @@ function drawPoints(map, filteredPoints) {
     markersArray.push(markers)
     markers.addTo(map).bindPopup(generateCard(filter.offer, filter.author));
 
+  });
+
+  mapFiltersElement.classList.remove('map__filters--disabled');
+  mapFiltersElement.childNodes.forEach(element => {
+    element.disabled = false;
   });
 }
 

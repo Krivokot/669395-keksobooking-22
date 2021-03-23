@@ -5,17 +5,16 @@ import {mapView} from './main.js';
 import {mapFiltersElement} from './filters.js';
 
 const advertsFormElement = document.querySelector('.ad-form');
-const mapFilterElement = document.querySelector('.map__filters');
 const addressInputElement = document.querySelector('#address');
 const resetButton = document.querySelector('.ad-form__reset');
 const mainElement = document.querySelector('main');
 const promoElement = mainElement.querySelector('.promo');
 
 advertsFormElement.classList.add('ad-form--disabled');
-mapFilterElement.classList.add('map__filters--disabled');
+mapFiltersElement.classList.add('map__filters--disabled');
 
 
-mapFilterElement.childNodes.forEach(element => {
+mapFiltersElement.childNodes.forEach(element => {
   element.disabled = true;
 });
 
@@ -43,24 +42,46 @@ const closeModal = (popup) => {
   popup.classList.add('hidden');
 };
 
+
 const closeModalByAction = (popupType) => {
   popupType.addEventListener('click', () => {
     closeModal(popupType);
   })
 
-  document.addEventListener('keydown', (evt) => {
+  document.addEventListener('keydown', function closeModalByKey(evt) {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       closeModal(popupType);
     }
+    document.removeEventListener('keydown', closeModalByKey)
   })
-
-
 }
 
 const showModal = (templateId) => {
   const popupTemplate = document.querySelector(templateId).content;
   mainElement.insertBefore(popupTemplate, promoElement);
+}
+
+const onSuccess = () => {
+  showModal('#success');
+  resetForm();
+  const sendPopup = document.querySelector('.success');
+  sendPopup.classList.remove('hidden');
+
+  closeModalByAction(sendPopup);
+}
+
+const onError = () => {
+  showModal('#error');
+  const errorPopup = document.querySelector('.error');
+  errorPopup.classList.remove('hidden');
+
+  closeModalByAction(errorPopup);
+
+  const errorButton = document.querySelector('.error__button');
+  errorButton.addEventListener('click', () => {
+    errorPopup.classList.add('hidden');
+  })
 }
 
 advertsFormElement.addEventListener('submit', (evt) => {
@@ -70,26 +91,14 @@ advertsFormElement.addEventListener('submit', (evt) => {
   postData(formData)
     .then((response) => {
       if (response.ok) {
-        showModal('#success');
-        resetForm();
-        const sendPopup = document.querySelector('.success');
-        sendPopup.classList.remove('hidden');
-
-        closeModalByAction(sendPopup);
+        onSuccess();
+      } else {
+        onError();
       }
     })
     .catch(() => {
-      showModal('#error');
-      const errorPopup = document.querySelector('.error');
-      errorPopup.classList.remove('hidden');
-
-      closeModalByAction(errorPopup);
-
-      const errorButton = document.querySelector('.error__button');
-      errorButton.addEventListener('click', () => {
-        errorPopup.classList.add('hidden');
-      })
+      onError();
     })
 })
 
-export {advertsFormElement, mapFilterElement, addressInputElement, mainElement, promoElement};
+export {advertsFormElement, addressInputElement, mainElement, promoElement};
