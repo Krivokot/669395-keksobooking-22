@@ -1,4 +1,3 @@
-
 /* global _:readonly */
 
 import { removeMarkers } from './map.js';
@@ -18,12 +17,6 @@ const DELAY = 500;
 
 const filterByType = (items) => {
   return items.offer.type === filterHousingTypeElement.value || filterHousingTypeElement.value === 'any';
-}
-
-
-function createFilter (points, filtered) {
-  const filteredPoints = points.filter(item => filterByType(item)).slice(0, 10)
-  filtered(filteredPoints);
 }
 
 const filterByRooms = (items) => {
