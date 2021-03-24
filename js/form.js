@@ -3,12 +3,16 @@ import { isEscEvent } from './util.js';
 import {addMainPointToMap, removeMainMarker, addPointsToMap} from './map.js';
 import {mapView} from './main.js';
 import {mapFiltersElement} from './filters.js';
+import {imagePreviewElement, photoPreviewElement} from './photos.js';
+import {avatarPreviewElement} from './avatar.js';
 
 const advertsFormElement = document.querySelector('.ad-form');
 const addressInputElement = document.querySelector('#address');
 const resetButton = document.querySelector('.ad-form__reset');
 const mainElement = document.querySelector('main');
 const promoElement = mainElement.querySelector('.promo');
+
+const DEFAULT_AVATAR_URL = 'img/muffin-grey.svg';
 
 advertsFormElement.classList.add('ad-form--disabled');
 mapFiltersElement.classList.add('map__filters--disabled');
@@ -23,6 +27,8 @@ advertsFormElement.childNodes.forEach(element => {
 });
 
 const resetForm = () => {
+  photoPreviewElement.removeChild(imagePreviewElement);
+  avatarPreviewElement.src = DEFAULT_AVATAR_URL;
   advertsFormElement.reset();
   mapFiltersElement.reset();
   removeMainMarker();

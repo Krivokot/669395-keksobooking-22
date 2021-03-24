@@ -11,7 +11,7 @@ const minPriceValue = {
   PALACE: 10000,
 };
 
-const getTypePrice = (evt) => {
+const onTypeElementChange = (evt) => {
   priceElement.value = null;
   switch (evt.target.value) {
     case BUNGALOW:
@@ -30,13 +30,13 @@ const getTypePrice = (evt) => {
 };
 
 priceElement.min = DEFAULT_MIN_PRICE;
-typeElement.addEventListener('change', getTypePrice);
+typeElement.addEventListener('change', onTypeElementChange);
 
 const timeInElement = document.querySelector('#timein');
 const timeOutElement = document.querySelector('#timeout');
 
 
-const syncTimeInValue = (evt) => {
+const onTimeInElementChange = (evt) => {
   timeOutElement.childNodes.forEach(element => {
     if (evt.target.value === element.value) {
       element.selected = true;
@@ -44,7 +44,7 @@ const syncTimeInValue = (evt) => {
   });
 }
 
-const syncTimeOutValue = (evt) => {
+const onTimeOutElementChange = (evt) => {
   timeInElement.childNodes.forEach(element => {
     if (evt.target.value === element.value) {
       element.selected = true;
@@ -52,8 +52,8 @@ const syncTimeOutValue = (evt) => {
   });
 }
 
-timeInElement.addEventListener('change', syncTimeInValue);
-timeOutElement.addEventListener('change', syncTimeOutValue);
+timeInElement.addEventListener('change', onTimeInElementChange);
+timeOutElement.addEventListener('change', onTimeOutElementChange);
 
 
 const roomNumberElement = document.querySelector('#room_number');
@@ -67,7 +67,7 @@ const updateDefaultCapacityDisabled = (value) => {
 
 updateDefaultCapacityDisabled(true);
 
-const syncCapacityValue = (evt) => {
+const onRoomNumberElementChange = (evt) => {
   switch (evt.target.value) {
     case '1':
       return capacityElement.children[2].selected = true,
@@ -90,5 +90,5 @@ const syncCapacityValue = (evt) => {
   }
 }
 
-roomNumberElement.addEventListener('change', syncCapacityValue);
+roomNumberElement.addEventListener('change', onRoomNumberElementChange);
 
